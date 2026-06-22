@@ -1,0 +1,5 @@
+COVID-19 Detection from CT Scans Using Autoencoder-Based Anomaly Detection and CNN Classification
+
+Manual screening of CT scans for COVID-19 is slow and requires expert radiologists, who may be scarce during outbreaks. This project proposes a deep learning system that combines autoencoder-based anomaly detection with CNN classification to automatically identify COVID-19 patterns in CT scans, enabling rapid and reliable screening.
+
+create a clean structured step by step plan to build the above project, and get all the requirements like technical requirements, platforms to perform such as colab and everything needed to execute this project
