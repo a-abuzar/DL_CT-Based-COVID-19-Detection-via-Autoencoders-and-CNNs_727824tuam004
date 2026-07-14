@@ -27,5 +27,10 @@ build/*.egg-info
 .DS_Store
 Thumbs.db
 
-#AI Context
 context.md
+/data
+.gitignore
+Guidelines/DL_Project_Guidelines.pdf
+Guidelines/Question.txt
+.gitignore
+Guidelines/DL_Project_Checklist.pdf
