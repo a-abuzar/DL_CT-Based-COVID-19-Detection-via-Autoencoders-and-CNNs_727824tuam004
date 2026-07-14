@@ -45,13 +45,27 @@ if uploaded_file is not None:
     img_tensor = transform(image).unsqueeze(0).to(device)
     
     with torch.no_grad():
-        out, _ = model(img_tensor)
+        out, decoded = model(img_tensor)
         prob = torch.sigmoid(out).item()
-    
-    if prob > 0.5:
-        st.error(f"**Prediction: COVID-19 Positive** (Confidence: {prob*100:.2f}%)")
-    else:
-        st.success(f"**Prediction: Normal / non-COVID** (Confidence: {(1-prob)*100:.2f}%)")
         
-st.markdown("---")
-st.markdown("**Deployment Readiness:** This Streamlit app serves as a demonstration of real-world clinical deployment readiness (Phase 10).")
+        # Calculate Reconstruction Error (MSE)
+        mse_loss = torch.nn.functional.mse_loss(decoded, img_tensor).item()
+    
+    # Threshold for filtering out non-CT scans. 
+    # Calibrated value: The maximum MSE observed for valid CT scans was ~0.040
+    # We use 0.048 (Max + 20% safety margin) as a data-driven boundary.
+    RECONSTRUCTION_THRESHOLD = 0.048 
+    
+    if mse_loss > RECONSTRUCTION_THRESHOLD:
+        st.warning("⚠️ **Invalid Image Detected!**")
+        st.write(f"This image doesn't look like a standard CT scan. (Reconstruction Error: {mse_loss:.4f} > Threshold: {RECONSTRUCTION_THRESHOLD})")
+        st.write("Please upload a valid grayscale chest CT scan.")
+    else:
+        # Valid CT scan, show predictions
+        if prob > 0.5:
+            st.error(f"**Prediction: COVID-19 Positive** (Confidence: {prob*100:.2f}%)")
+        else:
+            st.success(f"**Prediction: Normal / non-COVID** (Confidence: {(1-prob)*100:.2f}%)")
+        
+        # Optionally display the reconstruction error for debugging
+        st.caption(f"Image passed validation. Reconstruction Error: {mse_loss:.4f}")
