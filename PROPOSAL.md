@@ -1,8 +1,8 @@
 # Project Proposal
 
 **Title:** COVID-19 Detection from CT Scans Using Autoencoder-Based Anomaly Detection and CNN Classification
-**Student Name:** [Your Name]
-**Roll Number:** [Your Roll Number]
+**Student Name:** Abuzar A
+**Roll Number:** 727824TUAM004
 
 ## Objective
 The primary objective of this project is to construct an automated deep learning diagnostic system capable of screening COVID-19 infections from chest CT scans. By utilizing a hybrid architecture that combines an Autoencoder with a Convolutional Neural Network (CNN), the system aims to accurately distinguish between COVID-19 and non-COVID patients, minimizing false negatives and enhancing diagnostic efficiency.
